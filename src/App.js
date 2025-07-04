@@ -1,53 +1,20 @@
+
 import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Recherche from './Recherche';
 import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
 
+
 const Page404 = () => {
-  const [connected, setConnected] = useState(false);
 
-  if (!connected) {
-    return (
-      <div>
-        <p>Vous n'êtes pas connectés !</p>
-        <button onClick={() => setConnected(true)}>Se connecter</button>
-      </div>
-    );
-  }
-
-  return <Navigate to="/" />;
 };
 
 const Accueil = () => {
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState('');
 
-  const accesAPI = async (alcool) => {
-    if (alcool) {
-      try {
-        const reponse = await fetch(
-          `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=${alcool}`
-        );
-        const data = await reponse.json();
+};
 
-        if (data.drinks) {
-          setResult(data.drinks);
-          setError('');
-        } else {
-          setResult([]);
-          setError('Aucun résultat trouvé');
-        }
-      } catch (e) {
-        setResult(null);
-        setError('Erreur lors de la récupération des données');
-        console.error(e);
-      }
-    } else {
-      setResult(null);
-      setError("Veuillez choisir votre type d'alcool");
-    }
-  };
+
 
   return (
     <div>
@@ -72,6 +39,8 @@ const Accueil = () => {
     </div>
   );
 };
+
+
 
 function App() {
   return (
