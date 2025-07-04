@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Recherche from './Recherche';
-import { BrowserRouter, Routes, Navigate, Route, NavLink} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
 
 const Page404 = () => {
   const [connected, setConnected] = useState(false);
@@ -20,12 +20,6 @@ const Page404 = () => {
 };
 
 const Accueil = () => {
-    <div>
-      <h1>Bienvenue dans le site pour trouver votre alcool</h1>
-      <p>Total Drinks: 636, Total ingredients: 489</p>
-      <Recherche onPropagateToParent={accesAPI} /> </div>
-      
-  const [TypeAlcool, setTypeAlcool] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
 
@@ -67,9 +61,10 @@ const Accueil = () => {
       {result && result.length > 0 && (
         <div style={{ marginTop: '20px' }}>
           <h2>Résultat :</h2>
-          {result.map((item, index) => (
-            <p key={index}>
-              {item.strDrink} | <img src={item.strDrinkThumb} alt={item.strDrink} width="50" /> | ID: {item.idDrink}
+          {result.map((item) => (
+            <p key={item.idDrink}>
+              {item.strDrink} |{' '}
+              <img src={item.strDrinkThumb} alt={item.strDrink} width="50" /> | ID: {item.idDrink}
             </p>
           ))}
         </div>
@@ -89,18 +84,18 @@ function App() {
             <li>
               <NavLink
                 to="/"
-                activeClassName="lien-actif"
-                activeStyle={{ color: 'red', fontWeight: 'bold' }}
-                exact={true}
+                className={({ isActive }) => (isActive ? 'lien-actif' : '')}
+                style={({ isActive }) => (isActive ? { color: 'red', fontWeight: 'bold' } : undefined)}
               >
                 Accueil
               </NavLink>
             </li>
           </ul>
         </header>
+
         <Routes>
-          <Route path="" component={Accueil} exact />
-          <Route path="*" component={Page404} />
+          <Route path="/" element={<Accueil />} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </BrowserRouter>
     </div>
